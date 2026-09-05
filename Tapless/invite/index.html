@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tapless カレンダーへの招待</title>
+<style>
+  :root { color-scheme: light dark; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', sans-serif;
+    min-height: 100vh; display: flex; align-items: center; justify-content: center;
+    padding: 24px; background: #fff; color: #1a1a1a; line-height: 1.7;
+  }
+  @media (prefers-color-scheme: dark) { body { background: #000; color: #f2f2f7; } }
+  .card { max-width: 420px; width: 100%; text-align: center; }
+  .icon { font-size: 56px; margin-bottom: 16px; }
+  h1 { font-size: 22px; margin-bottom: 8px; }
+  p { font-size: 15px; opacity: .75; margin-bottom: 24px; }
+  .btn {
+    display: block; padding: 15px 24px; border-radius: 14px; text-decoration: none;
+    font-weight: 600; font-size: 16px; margin-bottom: 12px;
+    background: #007AFF; color: #fff;
+  }
+  .btn.secondary { background: rgba(120,120,128,.16); color: #007AFF; }
+  .note { font-size: 13px; opacity: .6; margin-top: 20px; }
+  code {
+    display: inline-block; font-size: 12px; word-break: break-all;
+    background: rgba(120,120,128,.16); padding: 6px 10px; border-radius: 6px; margin-top: 6px;
+  }
+  .hidden { display: none; }
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="icon">📅</div>
+  <h1>カレンダーに招待されています</h1>
+  <p>Tapless でカレンダーを共有しましょう。</p>
+
+  <a class="btn" id="open" href="#">アプリで開く</a>
+  <a class="btn secondary" id="store" href="https://apps.apple.com/app/id6753343387">App Store からダウンロード</a>
+
+  <div class="note" id="tokenNote">
+    アプリを入れたあと、このページをもう一度開いてください。<br>
+    招待コード<br><code id="token"></code>
+  </div>
+  <div class="note hidden" id="invalid">招待リンクが正しくありません。送信者にリンクを再発行してもらってください。</div>
+</div>
+
+<script>
+  var token = new URLSearchParams(location.search).get('token');
+  if (!token) {
+    document.getElementById('open').classList.add('hidden');
+    document.getElementById('tokenNote').classList.add('hidden');
+    document.getElementById('invalid').classList.remove('hidden');
+  } else {
+    var scheme = 'aicalendarapp://invite?token=' + encodeURIComponent(token);
+    document.getElementById('open').href = scheme;
+    document.getElementById('token').textContent = token;
+    // インストール済みならそのままアプリへ。未インストールなら何も起きずページが残る。
+    location.href = scheme;
+  }
+</script>
+</body>
+</html>
