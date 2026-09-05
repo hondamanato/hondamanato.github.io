@@ -1,0 +1,12 @@
+{
+  "applinks": {
+    "details": [
+      {
+        "appIDs": ["LKD5YP2DRM.com.aicalendarapp.tapless"],
+        "components": [
+          { "/": "/Tapless/invite/*", "comment": "カレンダー招待リンク" }
+        ]
+      }
+    ]
+  }
+}
